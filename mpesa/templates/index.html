@@ -1,0 +1,7 @@
+<h1>Home Page</h1>
+<h3>Mpesa Integration</h3>
+{% if user.is_authenticated%}
+<h2>Hey {{user.username}}</h2>
+{% else %}
+<h2>Hey Stranger</h2>
+{% endif%}
