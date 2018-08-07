@@ -11,56 +11,32 @@ def index(request):
     current_user = request.user
     try:
         profile=Profile.objects.get(user=current_user)
-        print(profile.Account_Balance)
-        print(current_user.profile.phone_number)
         return render(request, 'index.html', {"title":title,"profile":profile})
     except:
-        print("anonymous")
+        print("anonymous user")
     return render(request, 'index.html', {"title":title})
 
 
-# def SignUp(request):
-#     '''
-#     User sign up with additional fields First Name, Last Name
-#     and Phone Number 
-#      '''
-#     title= "SignUp | eLimu"
-#     if request.method=='POST':
-#         form = SignUpForm(request.POST)
-#         if form.is_valid():
-#             user=form.save()
-#             user.refresh_from_db()
-#             user.profile.Phone_Number=form.cleaned_data.get('phone_number')
-#             print(user.profile.Phone_Number)
-#             print("hey")
-#             user.save()
-#             username = form.cleaned_data.get('username')
-#             raw_password = form.cleaned_data.get('password1')
-#             user= authenticate(username=username, password=raw_password)
-#             login(request,user)
-            
-#             print("hey");
-#             return redirect('index_page')
-#     else:
-#         form = SignUpForm()
-#     return render(request, 'registration/signup.html', {"title":title, "form":form})
-
-
 def SignUp(request):
-    if request.method == 'POST':
+    '''
+    User sign up with additional fields First Name, Last Name
+    and Phone Number 
+     '''
+    title= "SignUp | eLimu"
+    if request.method=='POST':
         form = SignUpForm(request.POST)
-        print(form.is_valid())
         if form.is_valid():
-            user = form.save()
-            user.refresh_from_db()  # load the profile instance created by the signal
-            user.profile.phone_number = form.cleaned_data.get('phone_number')
+            user=form.save()
+            user.refresh_from_db()
+            user.profile.phone_number=form.cleaned_data.get('phone_number')
             user.save()
-            print("hello from here")
+            username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=user.username, password=raw_password)
-            login(request, user)
+            user= authenticate(username=username, password=raw_password)
+            login(request,user)
             return redirect('index_page')
     else:
         form = SignUpForm()
-        print("failing")
-    return render(request, 'registration/signup.html', {'form': form})
+    return render(request, 'registration/signup.html', {"title":title, "form":form})
+
+
