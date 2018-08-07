@@ -3,13 +3,17 @@ from __future__ import unicode_literals
 from django.shortcuts import render, redirect
 from .forms import SignUpForm
 from django.contrib.auth import authenticate, login
+from .models import Profile
 
 
 def index(request):
     title="Home Page"
     current_user = request.user
     try:
+        profile=Profile.objects.get(user=current_user)
+        print(profile.Account_Balance)
         print(current_user.profile.phone_number)
+        return render(request, 'index.html', {"title":title,"profile":profile})
     except:
         print("anonymous")
     return render(request, 'index.html', {"title":title})

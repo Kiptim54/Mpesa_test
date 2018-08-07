@@ -11,8 +11,12 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    Account_Balance = models.IntegerField()
-    phone_number = models.IntegerField(null=True, blank=True)
+    Account_Balance = models.IntegerField(default=0)
+    phone_number = models.CharField(max_length=40 ,null=True, blank=True)
+
+    def __str__(self):
+        return self.user.username
+        
 
 @receiver(post_save, sender=User)
 def update_user_profile(sender, instance, created, **kwargs):
