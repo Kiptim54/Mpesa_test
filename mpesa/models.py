@@ -7,25 +7,15 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from phonenumber_field.modelfields import PhoneNumberField
 
+
+
 class Profile(models.Model):
-    user=models.OneToOneField(User, on_delete=models.CASCADE)
-    # Phone_Number=PhoneNumberField()
-    phone_number=models.IntegerField()
-    Account_Balance=models.IntegerField()
-
-
-    def __str__(self):
-        return self.user.username
-
-
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    Account_Balance = models.IntegerField()
+    phone_number = models.IntegerField(null=True, blank=True)
 
 @receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    print(instance)
+def update_user_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
-
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
-

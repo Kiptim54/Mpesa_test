@@ -7,5 +7,6 @@
     {% csrf_token %}
 {%bootstrap_form form%}
 <input type="submit">
+{{ formset.errors }} {{ formset.non_field_errors }}
 </form>
 {% endblock %}
