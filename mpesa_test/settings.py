@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'mpesa',
     'bootstrap3',
+    'phonenumber_field',
+
 ]
 
 MIDDLEWARE = [
