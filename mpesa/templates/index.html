@@ -1,15 +1,50 @@
 {% extends 'base.html'%}
 {% load bootstrap3%}
 {% block content %}
+<style>
+        .user_details{
+                display: flex;
+                justify-content: space-between;
+        }
+        .lesson{
+                text-align: center;
+                border:1px grey solid;
+                margin:2%;
+                border-radius: 3%;
+        }
+</style>
+
 <div class="container">
-        <h3>Mpesa Integration</h3>
+        <h1>eLimu | Mpesa Integration</h1>
         <hr>
         {% if user.is_authenticated%}
-        <h2>Welcome {{user.username}},</h2>
-        <h4>Account Balance : {{profile.Account_Balance}} Ksh</h4>
-        <br>
-        <h4>Phone Number: {{profile.phone_number}}</h4>
-        <button class="btn btn-danger"><a style="color:white;" href="/logout">Logout</a></button> 
+        <h3>Hey {{user.username}},</h3>
+        <div class="user_details">
+                <h4>Phone Number: {{profile.phone_number}}</h4>
+                
+                <h4>Account Balance : {{profile.Account_Balance}} Ksh</h4>
+               
+                <button class="btn btn-danger"><a style="color:white;" href="/logout">Logout</a></button> 
+        </div>
+        <hr>
+        {% if lessons %}
+        {%for lesson in lessons%}
+        <div class="lesson col-md-3" >
+        <h4>{{lesson.subject}}</h4>
+        <h4>{{lesson.paper}}</h4>
+        <h5> 
+                {% if purchased %}
+                <p>Take Exam</p>
+                {% else %}
+                <button class="btn btn-info" >Buy Exam</button>
+                {% endif %}
+        </h5>
+</div>
+        {% endfor %}
+       
+        {% else %}
+        <p>No lessons yet</p>
+        {% endif %}        
         {% else %}
         <h2>Welcome Stranger</h2>
         <button class="btn btn-danger"><a style="color:white;"href="/login">Login</a></button>

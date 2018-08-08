@@ -3,15 +3,16 @@ from __future__ import unicode_literals
 from django.shortcuts import render, redirect
 from .forms import SignUpForm
 from django.contrib.auth import authenticate, login
-from .models import Profile
+from .models import Profile, Lesson
 
 
 def index(request):
     title="Home Page"
     current_user = request.user
+    lessons=Lesson.objects.all()
     try:
         profile=Profile.objects.get(user=current_user)
-        return render(request, 'index.html', {"title":title,"profile":profile})
+        return render(request, 'index.html', {"title":title,"profile":profile,"lessons":lessons})
     except:
         print("anonymous user")
     return render(request, 'index.html', {"title":title})
