@@ -66,3 +66,20 @@ class C2BRequest(models.Model):
     @property
     def name(self):
         return '{} {} {}'.format(self.first_name, self.middle_name, self.last_name)
+
+
+class Validation(models.Model):
+    TransactionType= models.CharField(max_length=100 )
+    TransID:models.CharField( max_length=100 )
+    TransTime=models.BigIntegerField() 
+    TransAmount=models.FloatField()
+    BusinessShortCode=models.BigIntegerField()
+    BillRefNumber=models.CharField( max_length=100 )
+    InvoiceNumber=models.CharField( max_length=100)   
+    OrgAccountBalance=models.FloatField()
+    ThirdPartyTransID=models.CharField( max_length=100)
+    MSISDN=models.BigIntegerField()
+    FirstName=models.CharField( max_length=100)
+    MiddleName=models.CharField( max_length=100)     
+    LastName=models.CharField( max_length=100)
+

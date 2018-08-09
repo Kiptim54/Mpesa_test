@@ -16,10 +16,6 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.contrib.auth import views
-from mpesa.views import(
-    mpesaAPIView,
-
-)
 
 
 urlpatterns = [
@@ -27,7 +23,6 @@ urlpatterns = [
     url(r'^', include('mpesa.urls')),
     url(r'^login/$', views.login, name='login'),
     url(r'^logout/$', views.logout,{"next_page": '/'}, name='logout'),
-    url(r'^mpesa/', mpesaAPIView.as_view(),name='mpesa'),
     url(r'^api-auth/', include('rest_framework.urls')),
 ]
 

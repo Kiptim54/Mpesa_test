@@ -8,6 +8,58 @@ from .serializers import LessonSerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
+from rest_framework import views
+from rest_framework.response import Response
+
+from .serializers import ValidationSerializer
+from django.shortcuts import render
+from rest_framework.views import APIView
+
+class ValidationView(views.APIView):
+
+    def get(self, request):
+        data={
+                "TransactionType":"",
+                "TransID":"LGR219G3EY",
+                "TransTime":"20170727104247",
+                "TransAmount":"10.00",
+                "BusinessShortCode":"600134",
+                "BillRefNumber":"xyz",
+                "InvoiceNumber":"",
+                "OrgAccountBalance":"49197.00",
+                "ThirdPartyTransID":"1234567890",
+                "MSISDN":"254708374149",
+                "FirstName":"John",
+                "MiddleName":"",
+                "LastName":""
+                }
+        results = ValidationSerializer(data).data
+        return Response(results)
+    def post(self, request, format=None):
+        data={
+            "TransactionType": "",
+            "TransTime": "20",
+            "TransAmount": 100,
+            "BusinessShortCode": "634",
+            "BillRefNumber": "xyz",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": 40,
+            "ThirdPartyTransID": "1",
+            "MSISDN": "259",
+            "FirstName": "John",
+            "MiddleName": "",
+            "LastName": ""
+        }
+        results = ValidationSerializer(data=data)
+        if results.is_valid():
+            results.save()
+            success_response={
+                "ConversationID": "",
+	            "OriginatorCoversationID": "",
+	            "ResponseDescription": "success"
+            }
+            return Response(success_response, status=status.HTTP_201_CREATED)
+        return Response(results.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 def index(request):
@@ -56,12 +108,5 @@ class LessonList(APIView):
             serializers.save()
             return Response(serializers.data, status=status.HTTP_201_CREATED)
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
-from django.shortcuts import render
-from rest_framework.views import APIView
 
 
-# Create your views here.
-class mpesaAPIView(APIView):
-    def post(requests, *args,**kwargs):
-        return render(request )
-    
