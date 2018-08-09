@@ -56,3 +56,12 @@ class LessonList(APIView):
             serializers.save()
             return Response(serializers.data, status=status.HTTP_201_CREATED)
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+from django.shortcuts import render
+from rest_framework.views import APIView
+
+
+# Create your views here.
+class mpesaAPIView(APIView):
+    def post(requests, *args,**kwargs):
+        return render(request )
+    
