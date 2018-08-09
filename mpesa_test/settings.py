@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'mpesa',
     'bootstrap3',
     'phonenumber_field',
+    'rest_framework',
 
 ]
 

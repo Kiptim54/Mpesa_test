@@ -4,10 +4,14 @@ from django.shortcuts import render, redirect
 from .forms import SignUpForm
 from django.contrib.auth import authenticate, login
 from .models import Profile, Lesson
+from .serializers import LessonSerializer
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework import status
 
 
 def index(request):
-    title="Home Page"
+    title="eLimu | Home page"
     current_user = request.user
     lessons=Lesson.objects.all()
     try:
@@ -41,3 +45,14 @@ def SignUp(request):
     return render(request, 'registration/signup.html', {"title":title, "form":form})
 
 
+class LessonList(APIView):
+    def get(self, request, format=None):
+        all_lessons = Lesson.objects.all()
+        serializers = LessonSerializer(all_lessons, many=True)
+        return Response(serializers.data)
+    def post(self, request, format=None):
+        serializers=LessonSerializer(data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data, status=status.HTTP_201_CREATED)
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
