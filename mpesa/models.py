@@ -69,17 +69,38 @@ class C2BRequest(models.Model):
 
 
 class Validation(models.Model):
-    TransactionType= models.CharField(max_length=100 )
-    TransID:models.CharField( max_length=100 )
+    TransactionType= models.CharField(max_length=500, blank=True )
+    TransID=models.CharField(max_length=500,blank=True )
     TransTime=models.BigIntegerField() 
     TransAmount=models.FloatField()
     BusinessShortCode=models.BigIntegerField()
-    BillRefNumber=models.CharField( max_length=100 )
-    InvoiceNumber=models.CharField( max_length=100)   
-    OrgAccountBalance=models.FloatField()
-    ThirdPartyTransID=models.CharField( max_length=100)
+    BillRefNumber=models.CharField( max_length=500,blank=True )
+    InvoiceNumber=models.CharField( max_length=500,blank=True)   
+    OrgAccountBalance=models.CharField(blank=True,max_length=500)
+    ThirdPartyTransID=models.CharField( max_length=500,blank=True)
     MSISDN=models.BigIntegerField()
-    FirstName=models.CharField( max_length=100)
-    MiddleName=models.CharField( max_length=100)     
-    LastName=models.CharField( max_length=100)
+    FirstName=models.CharField( max_length=500,blank=True)
+    MiddleName=models.CharField( max_length=500,blank=True)     
+    LastName=models.CharField( max_length=500,blank=True)
 
+def __str__(self):
+    return self.TransactionType
+
+
+class Confirmation(models.Model):
+    TransactionType= models.CharField(max_length=500, blank=True )
+    TransID=models.CharField(max_length=500,blank=True )
+    TransTime=models.BigIntegerField() 
+    TransAmount=models.FloatField()
+    BusinessShortCode=models.BigIntegerField()
+    BillRefNumber=models.CharField( max_length=500,blank=True )
+    InvoiceNumber=models.CharField( max_length=500,blank=True)   
+    OrgAccountBalance=models.CharField(blank=True,max_length=500)
+    ThirdPartyTransID=models.CharField( max_length=500,blank=True)
+    MSISDN=models.BigIntegerField()
+    FirstName=models.CharField( max_length=500,blank=True)
+    MiddleName=models.CharField( max_length=500,blank=True)     
+    LastName=models.CharField( max_length=500,blank=True)
+
+def __str__(self):
+    return self.TransactionType

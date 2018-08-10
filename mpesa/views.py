@@ -10,34 +10,37 @@ from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework import views
 from rest_framework.response import Response
-
-from .serializers import ValidationSerializer
+from .serializers import ValidationSerializer,LessonSerializer, ConfirmationSerializer
 from django.shortcuts import render
 from rest_framework.views import APIView
+from .models import Validation, Confirmation
 
 class ValidationView(views.APIView):
 
-    def get(self, request):
+    def get(self, request, format=None):
         data={
-                "TransactionType":"",
-                "TransID":"LGR219G3EY",
-                "TransTime":"20170727104247",
-                "TransAmount":"10.00",
-                "BusinessShortCode":"600134",
-                "BillRefNumber":"xyz",
-                "InvoiceNumber":"",
-                "OrgAccountBalance":"49197.00",
-                "ThirdPartyTransID":"1234567890",
-                "MSISDN":"254708374149",
-                "FirstName":"John",
-                "MiddleName":"",
-                "LastName":""
-                }
-        results = ValidationSerializer(data).data
-        return Response(results)
+        "TransactionType": "",
+        "TransID":'BNJ&8',
+        "TransTime": "20",
+        "TransAmount": 100,
+        "BusinessShortCode": "634",
+        "BillRefNumber": "xyz",
+        "InvoiceNumber": "",
+        "OrgAccountBalance": 40,
+        "ThirdPartyTransID": "1",
+        "MSISDN": "259",
+        "FirstName": "John",
+        "MiddleName": "",
+        "LastName": ""
+    }
+        validations=Validation.objects.all()
+        results = ValidationSerializer(validations,many=True)
+        return Response(results.data)
+
     def post(self, request, format=None):
         data={
             "TransactionType": "",
+            "TransID":'BNJ&8',
             "TransTime": "20",
             "TransAmount": 100,
             "BusinessShortCode": "634",
@@ -50,7 +53,56 @@ class ValidationView(views.APIView):
             "MiddleName": "",
             "LastName": ""
         }
-        results = ValidationSerializer(data=data)
+        results = ValidationSerializer(data=request.data)
+        if results.is_valid():
+            results.save()
+            success_response={
+                "ConversationID": "",
+	            "OriginatorCoversationID": "",
+	            "ResponseDescription": "success"
+            }
+            return Response(success_response, status=status.HTTP_201_CREATED)
+        return Response(results.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class ConfirmationView(views.APIView):
+
+    def get(self, request, format=None):
+        data={
+        "TransactionType": "",
+        "TransID":'BNJ&8',
+        "TransTime": "20",
+        "TransAmount": 100,
+        "BusinessShortCode": "634",
+        "BillRefNumber": "xyz",
+        "InvoiceNumber": "",
+        "OrgAccountBalance": 40,
+        "ThirdPartyTransID": "1",
+        "MSISDN": "259",
+        "FirstName": "John",
+        "MiddleName": "",
+        "LastName": ""
+    }
+        confirmations=Confirmation.objects.all()
+        results = ConfirmationSerializer(confirmations,many=True)
+        return Response(results.data)
+
+    def post(self, request, format=None):
+        data={
+            "TransactionType": "",
+            "TransID":'BNJ&8',
+            "TransTime": "20",
+            "TransAmount": 100,
+            "BusinessShortCode": "634",
+            "BillRefNumber": "xyz",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": 40,
+            "ThirdPartyTransID": "1",
+            "MSISDN": "259",
+            "FirstName": "John",
+            "MiddleName": "",
+            "LastName": ""
+        }
+        results = ConfirmationSerializer(data=request.data)
         if results.is_valid():
             results.save()
             success_response={
