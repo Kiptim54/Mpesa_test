@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import (
-    Lesson
+    Lesson,
+    OnlinePayment
     # C2BRequest
     )
 from rest_framework.serializers import(
