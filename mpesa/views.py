@@ -25,10 +25,10 @@ class OnlinePaymentAPIView(APIView):
 
 
         data = {
-            "BusinessShortCode"=BusinessShortCode,
-            "password"=password,
-            "Timestamp"=Timestamp,
-            "CheckoutRequestID"=CheckoutRequestID
+            "BusinessShortCode":BusinessShortCode,
+            "password":password,
+            "Timestamp":Timestamp,
+            "CheckoutRequestID":CheckoutRequestID
         }
         OnlinePaymentcreate_seriliazer = OnlinePaymentSeriliazer(data=data)
         if OnlinePaymentcreate_seriliazer.is_valid():
