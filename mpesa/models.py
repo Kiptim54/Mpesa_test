@@ -1,29 +1,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+from django.contrib.auth.models import User
+from django.dispatch import receiver
+from django.db.models.signals import post_save
 
 from django.db import models
-from mpesa_api.util.managers import AuthTokenManager
 
 
 
 
-class AuthToken(models.Model):
-    """Handles AuthTokens"""
-    access_token = models.CharField(max_length=40);
-    type = models.CharField(max_length=3)
-    expires_in = models.BigIntegerField()
-    objects = AuthTokenManager()
-
-    def __str__(self):
-        return self.access_token
-
-    class Meta:
-        db_table ='tbl_access_token'
-from django.contrib.auth.models import User
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-from phonenumber_field.modelfields import PhoneNumberField
-from datetime import datetime
 
 
 

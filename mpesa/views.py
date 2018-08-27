@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate, login
 from .models import Profile, Lesson
 from .serializers import(
      LessonSerializer,
+     OnlinePaymentSeriliazer
     #  ConfirmationSerializer
 )
 from rest_framework.response import Response
@@ -30,8 +31,8 @@ class OnlinePaymentAPIView(APIView):
             "Timestamp":Timestamp,
             "CheckoutRequestID":CheckoutRequestID
         }
-        OnlinePaymentcreate_seriliazer = OnlinePaymentSeriliazer(data=data)
-        if OnlinePaymentcreate_seriliazer.is_valid():
+        OnlinePaymentcreate_serializer = OnlinePaymentSeriliazer(data=data)
+        if OnlinePaymentcreate_serializer.is_valid():
             new_payment = OnlinePaymentcreate_seriliazer.save()
 
             success_response ={
